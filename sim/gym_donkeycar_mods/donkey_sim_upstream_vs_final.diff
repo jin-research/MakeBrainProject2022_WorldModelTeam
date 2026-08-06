@@ -1,0 +1,188 @@
+--- gym_donkeycar/envs/donkey_sim.py (upstream 4ea6704)
++++ gym_donkeycar/envs/donkey_sim.py (ours, final)
+@@ -91,10 +91,12 @@
+         self.SceneToLoad = conf["level"]
+         self.loaded = False
+         self.max_cte = conf["max_cte"]
++        #print("conf["max_cte"]",conf["max_cte"])
+         self.timer = FPSTimer()
+ 
+         # sensor size - height, width, depth
+         self.camera_img_size = conf["cam_resolution"]
++        print("DonkeyUnitySimHandler, conf[cam_resolution]",conf["cam_resolution"])
+         self.image_array = np.zeros(self.camera_img_size)
+         self.image_array_b = None
+         self.last_obs = self.image_array
+@@ -150,6 +152,9 @@
+         self.current_lap_time = 0.0
+         self.starting_line_index = -1
+         self.lap_count = 0
++        
++        # dead
++        self.count_to_dead = 0.0
+ 
+     def on_connect(self, client: SimClient) -> None:
+         logger.debug("socket connected")
+@@ -392,6 +397,9 @@
+         self.roll = 0.0
+         self.pitch = 0.0
+         self.yaw = 0.0
++        
++        # dead
++        self.count_to_dead = 0.0
+ 
+     def get_sensor_size(self) -> Tuple[int, int, int]:
+         return self.camera_img_size
+@@ -442,6 +450,58 @@
+         self.calc_reward = types.MethodType(reward_fn, self)
+         logger.debug("custom reward fn set.")
+ 
++    # revize reward to alto vision
++
++    def calc_reward(self, done: bool) -> float:
++        # Normalization factor, real max speed is around 30
++        # but only attained on a long straight line
++        max_speed = 10
++        
++        #print("self.image_array[:,:,0]",self.image_array[:,:,0])
++        r_range_1 = (210 <(self.image_array[:,:,0]))
++        r_range_2 =  ( (self.image_array[:,:,0]) < 240 )
++        g_range_1 =  ( 170 < (self.image_array[:,:,1]) )
++        g_range_2 =  ( (self.image_array[:,:,1]) < 200 )
++        b_range_1 =  ( 110 < (self.image_array[:,:,2]) )
++        b_range_2 =  ( (self.image_array[:,:,2]) < 140 )
++        pixel_range = r_range_1 * r_range_2 * g_range_1 * g_range_2 * b_range_1 * b_range_2
++        pixel_range_num = pixel_range.sum()
++        all_square_pixel = sum((self.image_array).shape) / 3
++        all_square_pixel_percentage = (pixel_range_num/all_square_pixel)*100
++        #print("all_square_pixel_percentage [%]",all_square_pixel_percentage)
++
++        # print("image_array",self.image_array)
++
++        if done:
++            return -1.0
++
++        #if self.cte > self.max_cte:
++        #    return -1.0
++
++        # Collision
++        #if self.hit != "none":
++        #    return -2.0
++
++        # going fast close to the center of lane yields best reward
++        base_all_square_pixel_percentage = 5 #[%]
++        #print("old_reward", (1.0 - (self.cte / self.max_cte) ** 2) * (self.speed / max_speed))
++        #print("new_reward",( ( all_square_pixel_percentage / base_all_square_pixel_percentage )**2) * (self.speed / max_speed))
++        
++        
++        # steering
++
++        
++        
++        return_reward = ( ( all_square_pixel_percentage / base_all_square_pixel_percentage )) * ( self.speed / max_speed)
++        #return_reward = all_square_pixel_percentage * (self.speed*3)
++        #print("return_reward", return_reward)
++        return return_reward
++        
++
++        #return (1.0 - (self.cte / self.max_cte) ** 2) * (self.speed / max_speed)
++        
++        
++    """
+     def calc_reward(self, done: bool) -> float:
+         # Normalization factor, real max speed is around 30
+         # but only attained on a long straight line
+@@ -459,16 +519,16 @@
+ 
+         # going fast close to the center of lane yields best reward
+         return (1.0 - (self.cte / self.max_cte) ** 2) * (self.speed / max_speed)
+-
++    """
+     # ------ Socket interface ----------- #
+-
+     def on_telemetry(self, message: Dict[str, Any]) -> None:
+ 
+         img_string = message["image"]
+         image = Image.open(BytesIO(base64.b64decode(img_string)))
+-
++        
+         # always update the image_array as the observation loop will hang if not changing.
+         self.image_array = np.asarray(image)
++
+         self.time_received = time.time()
+ 
+         if "image_b" in message:
+@@ -483,6 +543,8 @@
+ 
+         if "speed" in message:
+             self.speed = message["speed"]
++            #print("on_telemetry, message",message["speed"])
++
+ 
+         if "gyro_x" in message:
+             self.gyro_x = message["gyro_x"]
+@@ -549,11 +611,43 @@
+         """
+         self.determine_episode_over = types.MethodType(ep_over_fn, self)
+         logger.debug("custom ep_over fn set.")
+-
+     def determine_episode_over(self):
+         # we have a few initial frames on start that are sometimes very large CTE when it's behind
+         # the path just slightly. We ignore those.
+-        if math.fabs(self.cte) > 2 * self.max_cte:
++                      
++        ### determined by a pixel percentage
++        r_range_1 =  ( 210 < (self.image_array[:,:,0]) )
++        r_range_2 =  ( (self.image_array[:,:,0]) < 240 )
++        g_range_1 =  ( 170 < (self.image_array[:,:,1]) )
++        g_range_2 =  ( (self.image_array[:,:,1]) < 200 )
++        b_range_1 =  ( 110 < (self.image_array[:,:,2]) )
++        b_range_2 =  ( (self.image_array[:,:,2]) < 140 )
++        pixel_range = r_range_1 * r_range_2 * g_range_1 * g_range_2 * b_range_1 * b_range_2
++        pixel_range_num = pixel_range.sum()
++        all_square_pixel = sum((self.image_array).shape) / 3
++        dead_all_square_pixel_percentage = (pixel_range_num/all_square_pixel)*100
++        
++        # print("dead check c",self.count_to_dead)
++        if dead_all_square_pixel_percentage < 0.1:
++            #print("dead_count: ",self.count_to_dead)
++            self.count_to_dead+=1
++            if self.count_to_dead >= 15*2:
++                self.over = True
++                self.count_to_dead = 0.0
++                #print("game over! dead_all_square_pixel_percentage: ",dead_all_square_pixel_percentage)
++        else:
++            #print("dead_all_square_pixel_percentage",dead_all_square_pixel_percentage)
++            if self.count_to_dead > 5:
++            	self.count_to_dead -= 5
++            
++        # Disable reset
++        if os.environ.get("RACE") == "True":
++            self.over = False
++    """archive
++    def determine_episode_over(self):
++        # we have a few initial frames on start that are sometimes very large CTE when it's behind
++        # the path just slightly. We ignore those.
++        if  math.fabs(self.cte) > 2 * self.max_cte:
+             pass
+         elif math.fabs(self.cte) > self.max_cte:
+             logger.debug(f"game over: cte {self.cte}")
+@@ -571,6 +665,7 @@
+         # Disable reset
+         if os.environ.get("RACE") == "True":
+             self.over = False
++    """
+ 
+     def on_scene_selection_ready(self, message: Dict[str, Any]) -> None:
+         logger.debug("SceneSelectionReady")
+@@ -677,8 +772,8 @@
+     def send_cam_config(
+         self,
+         msg_type: str = "cam_config",
+-        img_w: int = 0,
+-        img_h: int = 0,
++        img_w: int = 64,
++        img_h: int = 64,
+         img_d: int = 0,
+         img_enc: Union[str, int] = 0,  # 0 is default value
+         fov: int = 0,

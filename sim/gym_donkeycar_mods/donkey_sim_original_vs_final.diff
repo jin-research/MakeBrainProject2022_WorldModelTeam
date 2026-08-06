@@ -1,0 +1,149 @@
+--- donkey_sim_original.py (ours, 2022-10-21)
++++ donkey_sim.py (ours, 2022-10-31 final)
+@@ -152,6 +152,9 @@
+         self.current_lap_time = 0.0
+         self.starting_line_index = -1
+         self.lap_count = 0
++        
++        # dead
++        self.count_to_dead = 0.0
+ 
+     def on_connect(self, client: SimClient) -> None:
+         logger.debug("socket connected")
+@@ -394,6 +397,9 @@
+         self.roll = 0.0
+         self.pitch = 0.0
+         self.yaw = 0.0
++        
++        # dead
++        self.count_to_dead = 0.0
+ 
+     def get_sensor_size(self) -> Tuple[int, int, int]:
+         return self.camera_img_size
+@@ -445,25 +451,54 @@
+         logger.debug("custom reward fn set.")
+ 
+     # revize reward to alto vision
++
+     def calc_reward(self, done: bool) -> float:
+         # Normalization factor, real max speed is around 30
+         # but only attained on a long straight line
+         max_speed = 10
+         
++        #print("self.image_array[:,:,0]",self.image_array[:,:,0])
++        r_range_1 = (210 <(self.image_array[:,:,0]))
++        r_range_2 =  ( (self.image_array[:,:,0]) < 240 )
++        g_range_1 =  ( 170 < (self.image_array[:,:,1]) )
++        g_range_2 =  ( (self.image_array[:,:,1]) < 200 )
++        b_range_1 =  ( 110 < (self.image_array[:,:,2]) )
++        b_range_2 =  ( (self.image_array[:,:,2]) < 140 )
++        pixel_range = r_range_1 * r_range_2 * g_range_1 * g_range_2 * b_range_1 * b_range_2
++        pixel_range_num = pixel_range.sum()
++        all_square_pixel = sum((self.image_array).shape) / 3
++        all_square_pixel_percentage = (pixel_range_num/all_square_pixel)*100
++        #print("all_square_pixel_percentage [%]",all_square_pixel_percentage)
++
++        # print("image_array",self.image_array)
++
+         if done:
+             return -1.0
+ 
+-        if self.cte > self.max_cte:
+-            return -1.0
++        #if self.cte > self.max_cte:
++        #    return -1.0
+ 
+         # Collision
+-        if self.hit != "none":
+-            return -2.0
++        #if self.hit != "none":
++        #    return -2.0
+ 
+         # going fast close to the center of lane yields best reward
+-        return (1.0 - (self.cte / self.max_cte) ** 2) * (self.speed / max_speed)
++        base_all_square_pixel_percentage = 5 #[%]
++        #print("old_reward", (1.0 - (self.cte / self.max_cte) ** 2) * (self.speed / max_speed))
++        #print("new_reward",( ( all_square_pixel_percentage / base_all_square_pixel_percentage )**2) * (self.speed / max_speed))
++        
++        
++        # steering
++
++        
++        
++        return_reward = ( ( all_square_pixel_percentage / base_all_square_pixel_percentage )) * ( self.speed / max_speed)
++        #return_reward = all_square_pixel_percentage * (self.speed*3)
++        #print("return_reward", return_reward)
++        return return_reward
+         
+ 
++        #return (1.0 - (self.cte / self.max_cte) ** 2) * (self.speed / max_speed)
+         
+         
+     """
+@@ -490,7 +525,7 @@
+ 
+         img_string = message["image"]
+         image = Image.open(BytesIO(base64.b64decode(img_string)))
+-
++        
+         # always update the image_array as the observation loop will hang if not changing.
+         self.image_array = np.asarray(image)
+ 
+@@ -508,6 +543,8 @@
+ 
+         if "speed" in message:
+             self.speed = message["speed"]
++            #print("on_telemetry, message",message["speed"])
++
+ 
+         if "gyro_x" in message:
+             self.gyro_x = message["gyro_x"]
+@@ -574,7 +611,39 @@
+         """
+         self.determine_episode_over = types.MethodType(ep_over_fn, self)
+         logger.debug("custom ep_over fn set.")
+-
++    def determine_episode_over(self):
++        # we have a few initial frames on start that are sometimes very large CTE when it's behind
++        # the path just slightly. We ignore those.
++                      
++        ### determined by a pixel percentage
++        r_range_1 =  ( 210 < (self.image_array[:,:,0]) )
++        r_range_2 =  ( (self.image_array[:,:,0]) < 240 )
++        g_range_1 =  ( 170 < (self.image_array[:,:,1]) )
++        g_range_2 =  ( (self.image_array[:,:,1]) < 200 )
++        b_range_1 =  ( 110 < (self.image_array[:,:,2]) )
++        b_range_2 =  ( (self.image_array[:,:,2]) < 140 )
++        pixel_range = r_range_1 * r_range_2 * g_range_1 * g_range_2 * b_range_1 * b_range_2
++        pixel_range_num = pixel_range.sum()
++        all_square_pixel = sum((self.image_array).shape) / 3
++        dead_all_square_pixel_percentage = (pixel_range_num/all_square_pixel)*100
++        
++        # print("dead check c",self.count_to_dead)
++        if dead_all_square_pixel_percentage < 0.1:
++            #print("dead_count: ",self.count_to_dead)
++            self.count_to_dead+=1
++            if self.count_to_dead >= 15*2:
++                self.over = True
++                self.count_to_dead = 0.0
++                #print("game over! dead_all_square_pixel_percentage: ",dead_all_square_pixel_percentage)
++        else:
++            #print("dead_all_square_pixel_percentage",dead_all_square_pixel_percentage)
++            if self.count_to_dead > 5:
++            	self.count_to_dead -= 5
++            
++        # Disable reset
++        if os.environ.get("RACE") == "True":
++            self.over = False
++    """archive
+     def determine_episode_over(self):
+         # we have a few initial frames on start that are sometimes very large CTE when it's behind
+         # the path just slightly. We ignore those.
+@@ -596,6 +665,7 @@
+         # Disable reset
+         if os.environ.get("RACE") == "True":
+             self.over = False
++    """
+ 
+     def on_scene_selection_ready(self, message: Dict[str, Any]) -> None:
+         logger.debug("SceneSelectionReady")

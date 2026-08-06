@@ -1,0 +1,33 @@
+# 大容量資産（重み・走行データ・動画）はリポジトリに置かない。配布先は README §2.2
+*.pth
+*.npy
+*.h5
+*.zip
+*.tar
+*.tar.gz
+*.mp4
+*.mov
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/bin/
+env/lib/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# エディタ
+.vscode/
+.idea/
+*.swp

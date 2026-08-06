@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you refer to this work, please cite it as below."
+title: "世界モデルを用いた自動運転の実現 (World Model Car): Dreamer-based autonomous driving on a Donkey Car"
+abstract: >-
+  2022年度 公立はこだて未来大学「脳をつくるプロジェクト」グループ 22-A の成果。
+  世界モデル Dreamer をシミュレーション環境で学習させ、その学習済みモデルを
+  Jetson Nano を搭載したラジコンカー (Donkey Car XR-F2) へ移して実環境を走行させた。
+  当時のコード、環境の版、詰まった箇所の記録を含む。
+type: software
+authors:
+  - family-names: "Nakamura"
+    given-names: "Jin"
+    alias: "中村仁"
+    affiliation: "Future University Hakodate"
+  - family-names: "Katogi"
+    given-names: "Atsuya"
+    alias: "加藤木敦也"
+    affiliation: "Future University Hakodate"
+  - family-names: "Ito"
+    given-names: "Seiji"
+    alias: "伊藤生慈"
+    affiliation: "Future University Hakodate"
+  - family-names: "Kuroiwa"
+    given-names: "Sotaro"
+    alias: "黒岩蒼太郎"
+    affiliation: "Future University Hakodate"
+  - family-names: "Watanabe"
+    given-names: "Yuto"
+    alias: "渡邉悠仁"
+    affiliation: "Future University Hakodate"
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+repository-code: "https://github.com/jin-research/MakeBrainProject2022_WorldModelTeam"
+url: "https://www.fun.ac.jp/project/6159/"
+date-released: "2026-08-05"
+keywords:
+  - world model
+  - Dreamer
+  - model-based reinforcement learning
+  - autonomous driving
+  - Donkey Car
+  - Jetson Nano
+  - sim-to-real

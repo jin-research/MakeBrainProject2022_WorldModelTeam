@@ -1,0 +1,46 @@
+--- /work/gq20/q20001/mbp_dreamer/vendor_diff/vendor/donkeycar/donkeycar_jetson_nano/donkeycar/parts/web_controller/web.py	2022-11-25 17:47:12.000000000 +0900
++++ car/vendor_mods/parts/web_controller/web.py	2019-11-12 15:10:17.000000000 +0900
+@@ -14,14 +14,16 @@
+ 
+ 
+ import os
++import sys
+ import time
+-
+ import tornado
+ import tornado.ioloop
+ import tornado.web
+ import tornado.gen
+-
++from tornado import httpserver
+ from donkeycar import util
++import donkeycar as dk
++sys.path.append(os.path.split(dk.parts.__file__)[0])
+ 
+ 
+ class LocalWebController(tornado.web.Application):
+@@ -40,8 +42,9 @@
+         self.throttle = 0.0
+         self.mode = 'user'
+         self.recording = False
+-        self.ip_address = util.web.get_ip_address()
+-        self.access_url = 'http://{}:{}'.format(self.ip_address, self.port)
++        #self.ip_address = util.web.get_ip_address()
++        self.ip_address = 'https:192.168.1.1:8887'
++        self.access_url = 'https://{}:{}'.format(self.ip_address, self.port)
+ 
+         self.chaos_on = False
+         self.chaos_counter = 0
+@@ -88,7 +91,11 @@
+     def update(self):
+         """ Start the tornado web server. """
+         self.port = int(self.port)
+-        self.listen(self.port)
++        server = httpserver.HTTPServer(self, ssl_options={
++                "certfile": os.path.join(os.path.dirname(os.path.abspath(__file__)), "server.crt"),
++                "keyfile": os.path.join(os.path.dirname(os.path.abspath(__file__)), "server.key"),
++        })
++        server.listen(self.port)
+         instance = tornado.ioloop.IOLoop.instance()
+         instance.add_callback(self.say_hello)
+         instance.start()

@@ -1,0 +1,155 @@
+--- /work/gq20/q20001/mbp_dreamer/vendor_diff/vendor/donkeycar/donkeycar_jetson_nano/donkeycar/vehicle.py	2022-11-25 17:47:12.000000000 +0900
++++ car/vendor_mods/vehicle.py	2022-12-09 01:38:12.000000000 +0900
+@@ -6,13 +6,36 @@
+ @author: wroscoe
+ """
+ 
++import sys
++import pprint
++#print(pprint.pprint(sys.path))
++#print("#####################")
++
++
++#sys.path.append("/home/xiaor/mycar/donkeycar/real_data_names_store/directory")
++
++
++
+ import time
++import pytz
++import datetime
++import csv
++from csv import writer
+ from threading import Thread
+ from .memory import Memory
+ from .log import get_logger
+-
++#from partscamera import CSICamera
++import pickle
+ logger = get_logger(__name__)
+-
++from donkeycar.parts.datastore_for_record import steerings_record
++from donkeycar.parts.datastore_for_record import throttles_record
++from donkeycar.parts.datastore_for_record import images_record
++from .real_data_names_store import datafilename
++import sys
++sys.path.append("../")
++#from gets_rewawd_done import Gets_rewawd_done
++import cv2
++import numpy as np
+ 
+ class Vehicle:
+     def __init__(self, mem=None):
+@@ -20,8 +43,10 @@
+             mem = Memory()
+         self.mem = mem
+         self.parts = []
+-        self.on = True
+         self.threads = []
++        self.count_to_dead = 0
++        self.extention_color = 10
++        self.index_min = 0
+ 
+     def add(self, part, inputs=[], outputs=[],
+             threaded=False, run_condition=None):
+@@ -103,7 +128,90 @@
+         except KeyboardInterrupt:
+             pass
+         finally:
++            for i in range(5):
++                print("last time:", i)
++                time.sleep(1)
++            print("Do not push CTRL C!!!!!!!")
++            print("Do not push CTRL C!!!!!!!")
++            print("Do not push CTRL C!!!!!!!")
++            print("Do not push CTRL C!!!!!!!")
++            print("Do not push CTRL C!!!!!!!")
++            print("Do not push CTRL C!!!!!!!")
++            print("Do not push CTRL C!!!!!!!")
++            print("Do not push CTRL C!!!!!!!")
++            print("Do not push CTRL C!!!!!!!")
++            print("Do not push CTRL C!!!!!!!")
++            print("Do not push CTRL C!!!!!!!")
++            print("images_record",images_record)
++            #datafilename = "./data/3data.bin"
++            #datafilename = "./data/" + str(datetime.datetime.now(pytz.timezone('Asia/Tokyo'))) + "_data.bin"
++            #f = open("real_data_names_store.txt","a")
++            f= open("real_data_names_store.txt", mode='a')
++            f.write("{}\n".format(datafilename))
++            f.close()
++            print("name saved in real_data_names_store")
++            self.index_min = min(len(images_record), len(steerings_record), len(throttles_record))
++            if(len(images_record) > self.index_min):
++                images_record.pop()
++            if(len(steerings_record) > self.index_min):
++                steerings_record.pop()
++            if(len(throttles_record) > self.index_min):
++                throttles_record.pop()
++            with open(datafilename,"wb") as f:
++                print("steerings_record is being saved")
++                pickle.dump(steerings_record,f)
++                print("throttles_record is being saved")
++                pickle.dump(throttles_record,f)
++                print("images_record is being saved")
++                pickle.dump(images_record,f)
++                print("\n\n")
++                print("############################")
++                print(datafilename," is saved")
++            '''pd.to_pickle(,'./data/steerings_record.pkl')
++            pd.to_pickle(,'./data/throttles_record.pkl')
++            pd.to_pickle(,'./data/images_.pkl')'''
++            print("Gets_rewawd_done()")
++            #fun = Gets_rewawd_done()
++            #fun.determine_episode_over()
++            #fun.calc_reward()
++            print("save_pickle()")
++            #fun.save_pickle()
+             self.stop()
++            print("> CTRL C OK")
++    def determine_episode_over(self,image):
++        image = cv2.resize(image, dsize = (64, 64))
++        r_range_1 =  ( 210 - self.extention_color < (image[:,:,0]) )
++        r_range_2 =  ( (image[:,:,0]) < 240 + self.extention_color )
++        g_range_1 =  ( 170 - self.extention_color < (image[:,:,1]) )
++        g_range_2 =  ( (image[:,:,1]) < 200 + self.extention_color)
++        b_range_1 =  ( 110 - self.extention_color < (image[:,:,2]) )
++        b_range_2 =  ( (image[:,:,2]) < 140 + self.extention_color )
++        pixel_range = r_range_1 * r_range_2 * g_range_1 * g_range_2 * b_range_1 * b_range_2
++        pixel_range_num = pixel_range.sum()
++        all_square_pixel = sum((image).shape) / 3
++        dead_all_square_pixel_percentage = (pixel_range_num/all_square_pixel)*100
++    
++        print("dead check self.count_to_dead",self.count_to_dead)
++        if dead_all_square_pixel_percentage < 0.1:
++            print("dead_count: ",self.count_to_dead, dead_all_square_pixel_percentage)
++            self.count_to_dead+=1
++            if self.count_to_dead >= 15*2:
++                action=[0,0]
++
++
++                self.count_to_dead = 0.0
++                #self.add(action[0], inputs=['angle'])
++                #self.add(, inputs=['throttle'])
++                for i in range(15):
++                    print("dead!!!!!")
++                    print("moving wait time: ",15-i)
++                    time.sleep(1)
++
++                print("dead! dead_all_square_pixel_percentage: ",dead_all_square_pixel_percentage)
++        else:
++            print("dead_all_square_pixel_percentage",dead_all_square_pixel_percentage)
++            if self.count_to_dead > 5:
++                self.count_to_dead -= 5
+ 
+     def update_parts(self):
+         """
+@@ -125,6 +233,10 @@
+                 # run the part
+                 if entry.get('thread'):
+                     outputs = p.run_threaded(*inputs)
++                    #print("p",p)
++                    #print("outputs",outputs)
++                    images_record.append(outputs)
++                    self.determine_episode_over(outputs)
+                 else:
+                     outputs = p.run(*inputs)
+ 

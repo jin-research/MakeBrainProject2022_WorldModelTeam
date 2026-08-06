@@ -1,0 +1,41 @@
+--- /work/gq20/q20001/mbp_dreamer/vendor_diff/vendor/donkeycar/donkeycar_jetson_nano/donkeycar/parts/datastore.py	2022-11-25 17:47:12.000000000 +0900
++++ car/vendor_mods/parts/datastore.py	2022-11-28 22:08:37.000000000 +0900
+@@ -451,7 +451,7 @@
+         Accepts values, pairs them with their input keys and saves them
+         to disk.
+         """
+-        assert len(self.inputs) == len(args)
++        #assert len(self.inputs) == len(args)
+         record = dict(zip(self.inputs, args))
+         self.put_record(record)
+ 
+@@ -625,8 +625,10 @@
+ 
+ class TubGroup(Tub):
+     def __init__(self, tub_paths_arg):
++        print("tub_paths_arg",tub_paths_arg)
+         tub_paths = util.files.expand_path_arg(tub_paths_arg)
+         logger.info('TubGroup:tubpaths: {}'.format(tub_paths))
++        print("tub_paths",tub_paths)
+         self.tubs = [Tub(path) for path in tub_paths]
+         self.input_types = {}
+ 
+@@ -641,7 +643,11 @@
+ 
+         self.meta = {'inputs': list(self.input_types.keys()),
+                      'types': list(self.input_types.values())}
++        print("self.tubs",self.tubs)
++        print("type self.tubs",type(self.tubs))
+ 
++        #for t in self.tubs:
++        #    print(t)
+         self.df = pd.concat([t.df for t in self.tubs], axis=0, join='inner')
+ 
+     @property
+@@ -656,4 +662,4 @@
+         return len(self.tubs)
+ 
+     def get_num_records(self):
+-        return len(self.df)
+\ No newline at end of file
++        return len(self.df)

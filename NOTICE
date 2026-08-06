@@ -1,0 +1,52 @@
+世界モデルを用いた自動運転の実現 (World Model Car)
+Make Brain Project 2022, Group 22-A
+Future University Hakodate / 公立はこだて未来大学
+
+Copyright (c) 2022-2026
+  Jin Nakamura      中村仁
+  Atsuya Katogi     加藤木敦也
+  Seiji Ito         伊藤生慈
+  Sotaro Kuroiwa    黒岩蒼太郎
+  Yuto Watanabe     渡邉悠仁
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Documentation and figures authored by the above are licensed under
+Creative Commons Attribution 4.0 International (CC BY 4.0). See LICENSE-docs.
+
+--------------------------------------------------------------------------
+This work builds on the following third-party projects.
+Their license texts are reproduced under third_party/.
+
+  cross32768/Dreamer_PyTorch        MIT   Copyright (c) 2020 Kaito Suzuki
+    https://github.com/cross32768/Dreamer_PyTorch
+
+  autorope/donkeycar                MIT   Copyright (c) 2017 Will Roscoe
+    https://github.com/autorope/donkeycar
+
+  tawnkramer/gym-donkeycar          MIT   Tawn Kramer / Roma Sokolkov / Leigh Johnson
+    https://github.com/tawnkramer/gym-donkeycar
+
+  991693552/donkeycar_jetson_nano   MIT   Copyright (c) 2017 Will Roscoe
+    https://github.com/991693552/donkeycar_jetson_nano
+    (pinned at 0656898c14099f105f82945dd481cc6ce606b103)
+
+Not redistributed here: the XiaoR GEEK shared libraries (actuator.so,
+_XiaoRGEEK_SERVO_.so, xrcamera.so), XiaoRGEEK.jpg, and the modified JetPack
+image. These are vendor-supplied and their terms prohibit commercial use.
+--------------------------------------------------------------------------
+
+The documents under docs/ (group_report_22A.pdf, project_report.pdf,
+poster_main.pdf) are the versions published by Future University Hakodate at
+https://www.fun.ac.jp/project/6159/ and are reproduced here byte-for-byte.
+
+The document docs/group_report_22A_first_term.pdf (first-term group
+report) is a project document from 2022, published here for the first
+time as a historical record. It is not a university-hosted copy and is
+not covered by the CC BY 4.0 grant. The final presentation slides are
+published on SpeakerDeck (linked from the README), not in this
+repository.
