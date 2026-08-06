@@ -142,6 +142,28 @@
     .page-card:hover { background: #f4f6f9; }
     .page-card strong { color: var(--navy); display: block; margin-bottom: 2px; }
     .page-card span { font-size: 13px; color: var(--muted); line-height: 1.6; display: block; }
+    .hero { position: relative; overflow: hidden; border-radius: 3px; margin: 20px 0 6px; background: var(--navy); }
+    .hero-bg {
+      position: absolute; inset: -24px;
+      background-size: cover; background-position: center;
+      filter: blur(7px) brightness(0.9);
+      transform: scale(1.12);
+    }
+    .hero-veil { position: absolute; inset: 0; background: linear-gradient(rgba(31,56,100,.74), rgba(31,56,100,.52)); }
+    .hero-inner { position: relative; padding: 66px 24px; text-align: center; color: #fff; }
+    .hero-title { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: .06em; text-wrap: balance; }
+    .hero-sub { margin: 14px auto 0; max-width: 660px; font-size: 15px; line-height: 2; color: #e8edf5; }
+    .hero-links { margin: 22px 0 0; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .hero-links a { display: inline-block; padding: 8px 22px; border: 1px solid #fff; border-radius: 3px;
+                    color: #fff; text-decoration: none; font-size: 14px; }
+    .hero-links a:hover { background: #fff; color: var(--navy); }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-bg { background-image: url('figures/fig3-2_circuit.png') !important; }
+    }
+    @media (max-width: 640px) {
+      .hero-inner { padding: 46px 18px; }
+      .hero-title { font-size: 22px; }
+    }
     .site-footer {
       max-width: 900px;
       margin: 0 auto;
