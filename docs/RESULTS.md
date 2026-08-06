@@ -25,6 +25,10 @@ title: 成果
 
 ## 実機と学習結果
 
+| 実車のオンボードカメラ | シミュレータの観測(左)と世界モデル側の画像(右) |
+|---|---|
+| ![実車 Nao のオンボードカメラ映像](figures/real_onboard_camera.gif) | ![シミュレータの観測と世界モデル側の画像](figures/sim_observation_vs_model.gif) |
+
 | 実機 | 自作サーキット |
 |---|---|
 | ![Jetson Nanoとカメラを搭載したDonkey Car](figures/fig3-1_donkeycar.png) | ![白線と黄色い中央線を引いた自作サーキット](figures/fig3-2_circuit.png) |

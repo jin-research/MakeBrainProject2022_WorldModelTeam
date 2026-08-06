@@ -13,10 +13,6 @@ title: 世界モデルカー
   </div>
 </div>
 
-| 実車のオンボードカメラ | シミュレータの観測(左)と世界モデル側の画像(右) |
-|---|---|
-| ![実車 Nao のオンボードカメラ映像](figures/real_onboard_camera.gif) | ![シミュレータの観測と世界モデル側の画像](figures/sim_observation_vs_model.gif) |
-
 ![シミュレーションで学習したモデルを実機へ移し、走行データで更新する学習プロセス](figures/fig3-3_learning_process.png)
 
 1. シミュレーション環境でDreamerを学習させ、学習モデルを実機へ移しました。
