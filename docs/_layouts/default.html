@@ -179,5 +179,29 @@
   <footer class="site-footer">
     公立はこだて未来大学 2022年度「脳をつくるプロジェクト」グループA（22-A）世界モデルカー
   </footer>
+  <script type="module">
+    // Mermaid のコードブロックを図として描画する。
+    // kramdown は <div class="language-mermaid">、GitHub.com は <pre><code class="language-mermaid"> を出す。
+    // どちらの形でも拾い、同じブロックを二重に数えないようにする。
+    const seen = new Set();
+    const blocks = [];
+    document.querySelectorAll("div.language-mermaid, pre > code.language-mermaid").forEach((el) => {
+      const host = el.closest("div.language-mermaid") || el.closest("pre") || el;
+      if (seen.has(host)) return;
+      seen.add(host);
+      blocks.push({ host, code: el.textContent });
+    });
+    if (blocks.length) {
+      const mermaid = (await import("https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs")).default;
+      blocks.forEach(({ host, code }) => {
+        const diagram = document.createElement("pre");
+        diagram.className = "mermaid";
+        diagram.textContent = code;
+        host.replaceWith(diagram);
+      });
+      mermaid.initialize({ startOnLoad: false, theme: "neutral", securityLevel: "loose" });
+      await mermaid.run({ querySelector: "pre.mermaid" });
+    }
+  </script>
 </body>
 </html>

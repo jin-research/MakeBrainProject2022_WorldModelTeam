@@ -144,31 +144,3 @@ gantt
 月まで確認できる活動として、6月から7月にPC環境を構築し、8月から9月にはDreamer、シミュレーション環境、実環境で使う環境の互換性を踏まえた調整を進めました。10月上旬には、シミュレータを用いた世界モデルの学習と自動走行を確認しました。成果発表会の2日前から、実環境でのファインチューニングを行いました。
 
 2023年1月18日に最終報告書を提出しました。
-<script type="module">
-  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
-
-  // Mermaidのコードブロックは描画エンジンで出力形が変わる。
-  // GitHub Pages(kramdown+rouge)は <div class="language-mermaid">、
-  // GitHub.com標準は <pre><code class="language-mermaid"> になる。両方に対応する。
-  const blocks = [];
-  document
-    .querySelectorAll("div.language-mermaid")
-    .forEach((el) => blocks.push({ host: el, code: el.textContent }));
-  document
-    .querySelectorAll("pre > code.language-mermaid")
-    .forEach((code) => blocks.push({ host: code.parentElement, code: code.textContent }));
-
-  blocks.forEach(({ host, code }) => {
-    const diagram = document.createElement("pre");
-    diagram.className = "mermaid";
-    diagram.textContent = code;
-    host.replaceWith(diagram);
-  });
-
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: "neutral",
-    securityLevel: "loose"
-  });
-  await mermaid.run({ querySelector: "pre.mermaid" });
-</script>
