@@ -12,11 +12,33 @@ title: 世界モデルカー
   <p class="hero-links"><a href="RESULTS">成果を見る</a><a href="https://github.com/jin-research/MakeBrainProject2022_WorldModelTeam">GitHub</a></p>
 </div>
 
+## 車が見ている世界
+
+| 実車のオンボードカメラ | シミュレータの観測(左)と世界モデル側の画像(右) |
+|---|---|
+| ![実車 Nao のオンボードカメラ映像](figures/real_onboard_camera.gif) | ![シミュレータの観測と世界モデル側の画像](figures/sim_observation_vs_model.gif) |
+
+右の映像では、世界モデルが観測から再構成した画像を並べています。Dreamerはこの内部の世界の中で行動を学習します。
+
+## 学習の流れ
+
 ![シミュレーションで学習したモデルを実機へ移し、走行データで更新する学習プロセス](figures/fig3-3_learning_process.png)
 
 1. シミュレーション環境でDreamerを学習させ、学習モデルを実機へ移しました。
 2. Donkey Carを走らせて観測データと行動データを集め、PCで学習モデルを更新しました。
 3. 更新したモデルを実機へ戻す流れを繰り返し、実環境での自動走行を試しました。
+
+## 学習の結果
+
+| シミュレーション学習 | ファインチューニング後 |
+|---|---|
+| ![VAEによる観測画像の再構成](figures/fig4-1_vae_reconstruction.png) | ![ファインチューニング後のVAEによる再構成](figures/fig4-3_vae_reconstruction_finetuned.png) |
+| 観測画像の再構成を確認しました。 | 再構成はできましたが、学習損失には課題が残りました。 |
+
+| model loss | ファインチューニング後のKL loss |
+|---|---|
+| ![学習とともに低下したmodel loss](figures/fig4-2_model_loss.png) | ![ファインチューニング後に増加したKL loss](figures/fig4-5_kl_loss_finetuned.png) |
+| 学習に伴ってmodel lossが低下しました。 | 約50エピソードを超えたところからKL lossが増加しました。 |
 
 ## 成果の要点
 
@@ -24,7 +46,7 @@ title: 世界モデルカー
 - シミュレーションで学習したモデルを用いて、自作サーキット上の実機を自動走行させました。
 - 実機で、直線・Lカーブ・S字カーブでの自動走行を実現しました。
 
-[成果の詳細（図表つき）を見る](RESULTS)
+[成果の詳細（到達したことと残ったこと・実装の要点）を見る](RESULTS)
 
 ## ページ案内
 
