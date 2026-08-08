@@ -7,6 +7,8 @@
 *.tar.gz
 *.mp4
 *.mov
+# サイトのトップに載せる走行動画だけは同梱する
+!docs/media_autonomous_driving.mp4
 
 # Python
 __pycache__/
