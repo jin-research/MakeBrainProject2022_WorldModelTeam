@@ -5,15 +5,12 @@ title: 世界モデルカー
 
 <div class="hero">
   <video src="media_autonomous_driving.mp4" poster="figures/fig3-1_donkeycar.png"
-         autoplay muted loop playsinline preload="auto"></video>
-  <div class="hero-overlay">
-    <p class="hero-title">世界モデルを用いた自動運転の実現</p>
-    <p class="hero-sub">私たちは、観測から環境を学ぶ世界モデルの一種「Dreamer」を、小型車向け自動運転基盤「Donkey Car」に組み込み、シミュレーションと実機で自動走行させました。</p>
-    <p class="hero-links"><a href="RESULTS">成果を見る</a><a href="https://github.com/jin-research/MakeBrainProject2022_WorldModelTeam">GitHub</a></p>
-  </div>
+         autoplay muted loop playsinline preload="metadata" controls></video>
+  <p class="hero-caption">実環境を自動走行する Donkey Car「Nao」（2022年12月）</p>
+  <p class="hero-title">世界モデルを用いた自動運転の実現</p>
+  <p class="hero-sub">私たちは、観測から環境を学ぶ世界モデルの一種「Dreamer」を、小型車向け自動運転基盤「Donkey Car」に組み込み、シミュレーションと実機で自動走行させました。</p>
+  <p class="hero-links"><a href="RESULTS">成果を見る</a><a href="https://github.com/jin-research/MakeBrainProject2022_WorldModelTeam">GitHub</a></p>
 </div>
-
-<p class="hero-caption">上の映像は、実環境を自動走行する Donkey Car「Nao」の記録です（2022年12月）。</p>
 
 ## 車が見ている世界
 

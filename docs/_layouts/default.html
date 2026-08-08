@@ -144,42 +144,21 @@
     .page-card:hover { background: #f4f6f9; }
     .page-card strong { color: var(--navy); display: block; margin-bottom: 2px; }
     .page-card span { font-size: 13px; color: var(--muted); line-height: 1.6; display: block; }
-    /* 走行動画は画面の幅いっぱいに置く。本文の左右余白を打ち消して全幅にする */
-    .hero {
-      position: relative;
-      width: 100vw;
-      margin-left: calc(50% - 50vw);
-      margin-right: calc(50% - 50vw);
-      margin-top: 0;
-      margin-bottom: 26px;
-      background: #000;
-      overflow: hidden;
-    }
+    .hero { margin: 18px 0 8px; }
     .hero video {
-      display: block;
-      width: 100%;
-      height: min(78vh, 760px);
-      object-fit: cover;
-      background: #000;
+      display: block; width: 100%; height: auto;
+      background: #000; border: 1px solid var(--rule); border-radius: 3px;
     }
-    .hero-overlay {
-      position: absolute; left: 0; right: 0; bottom: 0;
-      padding: 46px 24px 26px;
-      background: linear-gradient(rgba(0,0,0,0), rgba(10,20,40,.82));
-      color: #fff; text-align: center;
-    }
-    .hero-title { margin: 0; font-size: 30px; font-weight: 700; letter-spacing: .05em; text-wrap: balance; }
-    .hero-sub { margin: 12px auto 0; max-width: 720px; font-size: 15px; line-height: 1.95; color: #e9eef6; }
-    .hero-links { margin: 18px 0 0; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .hero-links a { display: inline-block; padding: 8px 22px; border: 1px solid #fff; border-radius: 3px;
-                    color: #fff; text-decoration: none; font-size: 14px; }
-    .hero-links a:hover { background: #fff; color: var(--navy); }
     .hero-caption { margin: 10px 0 0; font-size: 13px; color: var(--muted); text-align: center; }
+    .hero-title { margin: 24px 0 0; font-size: 26px; font-weight: 700; color: var(--navy);
+                  letter-spacing: .04em; text-align: center; text-wrap: balance; }
+    .hero-sub { margin: 12px auto 0; max-width: 680px; font-size: 15.5px; line-height: 2; text-align: center; }
+    .hero-links { margin: 20px 0 0; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .hero-links a { display: inline-block; padding: 8px 22px; border: 1px solid var(--navy); border-radius: 3px;
+                    color: var(--navy); text-decoration: none; font-size: 14px; }
+    .hero-links a:hover { background: var(--navy); color: #fff; }
     @media (max-width: 640px) {
-      .hero video { height: min(62vh, 460px); }
-      .hero-overlay { padding: 34px 16px 18px; }
       .hero-title { font-size: 21px; }
-      .hero-sub { font-size: 13.5px; line-height: 1.85; }
     }
     .site-footer {
       max-width: 900px;
