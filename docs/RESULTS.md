@@ -25,9 +25,9 @@ title: 成果
 
 ## 実機と学習結果
 
-| 実車のオンボードカメラ | シミュレータの観測(左)と世界モデル側の画像(右) |
+| 実車のオンボードカメラ | シミュレータの観測(左)とVAEによる再構成(右) |
 |---|---|
-| ![実車 Nao のオンボードカメラ映像](figures/real_onboard_camera.gif) | ![シミュレータの観測と世界モデル側の画像](figures/sim_observation_vs_model.gif) |
+| ![実車 Nao のオンボードカメラ映像](figures/real_onboard_camera.gif) | ![シミュレータの観測とVAEによる再構成](figures/sim_observation_vs_model.gif) |
 
 | 実機 | 自作サーキット |
 |---|---|

@@ -44,9 +44,9 @@
 | 当時の経緯・体制・判断を知りたい | [docs/ABOUT.md](docs/ABOUT.md) と [docs/ABOUT_appendix.md](docs/ABOUT_appendix.md) |
 | 引用・権利を確認したい | §9（ライセンスと上流）と [CITATION.cff](CITATION.cff) |
 
-![シミュレータの観測（左）と世界モデル側の画像（右）](docs/figures/sim_observation_vs_model.gif)
+![シミュレータの観測（左）とVAEによる再構成（右）](docs/figures/sim_observation_vs_model.gif)
 
-*シミュレータの観測（左）と、世界モデル側の画像（右）。当時の発表資料の GIF をそのまま収録しています（Step 表示つき・101フレーム）。*
+*シミュレータの観測（左）と、VAEによる再構成（右）。当時の発表資料の GIF をそのまま収録しています（Step 表示つき・101フレーム）。*
 
 ![実車のオンボードカメラ](docs/figures/real_onboard_camera.gif)
 
