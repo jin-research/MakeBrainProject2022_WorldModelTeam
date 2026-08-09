@@ -26,9 +26,16 @@ title: 世界モデルカー
 
 ## 車が見ている世界
 
-| 実車のオンボードカメラ | シミュレータの観測(左)と世界モデル側の画像(右) |
-|---|---|
-| ![実車 Nao のオンボードカメラ映像](figures/real_onboard_camera.gif) | ![シミュレータの観測と世界モデル側の画像](figures/sim_observation_vs_model.gif) |
+<div class="gif-pair">
+  <figure>
+    <img src="figures/real_onboard_camera.gif" alt="実車 Nao のオンボードカメラ映像">
+    <figcaption>実車のオンボードカメラ</figcaption>
+  </figure>
+  <figure>
+    <img src="figures/sim_observation_vs_model.gif" alt="シミュレータの観測と世界モデル側の画像">
+    <figcaption>シミュレータの観測(左)と世界モデル側の画像(右)</figcaption>
+  </figure>
+</div>
 
 右の映像では、世界モデルが観測から再構成した画像を並べています。Dreamerはこの内部の世界の中で行動を学習します。
 

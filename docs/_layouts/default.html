@@ -90,6 +90,22 @@
       border: 1px solid var(--rule);
       border-radius: 3px;
     }
+    /* 図はページ幅に合わせて広げる。元画像が小さいので拡大して使う */
+    main table img { width: 100%; }
+    main p > img:only-child { display: block; margin: 0 auto; width: 100%; max-width: 660px; }
+    .gif-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+      margin: 1.2em 0;
+    }
+    .gif-pair figure { margin: 0; }
+    .gif-pair img { width: 100%; height: auto; display: block; }
+    .gif-pair figcaption { margin-top: 8px; font-size: 13.5px; color: var(--muted); text-align: center; }
+    @media (max-width: 640px) {
+      .gif-pair { grid-template-columns: 1fr; gap: 22px; }
+    }
     main a { color: #0b5394; }
     table {
       border-collapse: collapse;
