@@ -1,6 +1,8 @@
 ---
 layout: default
 title: 成果
+seo_title: "自動走行の研究成果｜Dreamer V1 × Donkey Car"
+description: "Dreamer V1とDonkey Carによる自動運転の研究成果。シミュレータでの600エピソードの学習、実機の直線・カーブ走行、ファインチューニングの結果と課題を紹介します。"
 ---
 
 # 成果

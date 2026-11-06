@@ -1,6 +1,8 @@
 ---
 layout: default
 title: 環境・実行記録
+seo_title: "環境・実行記録｜Dreamer V1 × Donkey Car"
+description: "2022年当時のDreamer V1・Donkey Car・Jetson Nanoの環境と実行記録。シミュレーション学習、重みの移行、実機走行、再学習の処理順を整理しています。完成済みの再現手順ではありません。"
 ---
 
 # 世界モデルカーの環境・実行記録

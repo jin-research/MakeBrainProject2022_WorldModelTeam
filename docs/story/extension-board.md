@@ -1,6 +1,8 @@
 ---
 layout: default
 title: 拡張ボードが動かない
+seo_title: "Jetson Nano拡張ボード対応の経緯｜世界モデルカー"
+description: "Jetson Nano搭載Donkey Carの拡張ボードとモーター制御に関する開発記録。PCA9685、改造JetPack、MyControllerを経て実機の制御を実現した経緯をまとめています。"
 ---
 
 # 拡張ボードが動かない — PCA9685 から MyController まで
