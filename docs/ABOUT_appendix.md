@@ -1,6 +1,8 @@
 ---
 layout: default
 title: 経緯
+seo_title: "開発の経緯｜世界モデルカー"
+description: "世界モデルカーの開発記録。カメラ画像から計算する報酬設計、Jetson Nanoの拡張ボード対応、TensorFlowからPyTorchへの移行など、試行錯誤の経緯を記録しています。"
 ---
 
 # 世界モデルカーの経緯
