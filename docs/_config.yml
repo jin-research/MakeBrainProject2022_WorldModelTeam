@@ -5,3 +5,10 @@ baseurl: "/MakeBrainProject2022_WorldModelTeam"
 lang: ja-JP
 plugins:
   - jekyll-sitemap
+
+# Keep the ownership verification file public, but exclude it from the sitemap.
+defaults:
+  - scope:
+      path: "google488f9e877c7d9a3e.html"
+    values:
+      sitemap: false
