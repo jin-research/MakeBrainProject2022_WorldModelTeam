@@ -12,3 +12,7 @@ defaults:
       path: "google488f9e877c7d9a3e.html"
     values:
       sitemap: false
+  - scope:
+      path: "sitemap.txt"
+    values:
+      sitemap: false
