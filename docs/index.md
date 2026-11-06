@@ -1,6 +1,8 @@
 ---
 layout: default
 title: 世界モデルカー
+seo_title: "世界モデルカー｜Dreamer V1を用いた自動運転（Donkey Car）"
+description: "公立はこだて未来大学の2022年度「脳をつくるプロジェクト」グループAの研究成果。世界モデルDreamer V1をDonkey CarとJetson Nanoに組み込み、シミュレーションと実機での自動走行を検証しました。"
 ---
 
 <div class="hero">
