@@ -11,12 +11,12 @@ description: "公立はこだて未来大学の2022年度「脳をつくるプ�
   <p class="hero-caption">実環境を自動走行する Donkey Car「Nao」（2022年12月）</p>
   <p class="hero-title">世界モデルを用いた自動運転の実現</p>
   <p class="hero-sub">私たちは、観測から環境を学ぶ世界モデルの一種「Dreamer」を、小型車向け自動運転基盤「Donkey Car」に組み込み、シミュレーションと実機で自動走行させました。</p>
-  <p class="hero-links"><a href="RESULTS">成果を見る</a><a href="https://github.com/jin-research/MakeBrainProject2022_WorldModelTeam">GitHub</a></p>
+  <p class="hero-links"><a href="RESULTS.html">成果を見る</a><a href="https://github.com/jin-research/MakeBrainProject2022_WorldModelTeam">GitHub</a></p>
 </div>
 
 ## はじめに
 
-**再現するための情報は、[GitHubリポジトリ](https://github.com/jin-research/MakeBrainProject2022_WorldModelTeam)にあります。** 機材と購入先、当時の環境の版、実行するファイル、そして私たちが詰まった箇所とその対処を、READMEと[環境・実行記録](SETUP)に書いています。同じキットで動かそうとする方は、そちらから読んでください。
+**再現するための情報は、[GitHubリポジトリ](https://github.com/jin-research/MakeBrainProject2022_WorldModelTeam)にあります。** 機材と購入先、当時の環境の版、実行するファイル、そして私たちが詰まった箇所とその対処を、READMEと[環境・実行記録](SETUP.html)に書いています。同じキットで動かそうとする方は、そちらから読んでください。
 
 **このページには、プロジェクトの全体像を書いています。** 何を作り、どこまで動いたか。どういう体制で進め、どこで詰まったか。以下の順に読めます。
 
@@ -67,15 +67,15 @@ description: "公立はこだて未来大学の2022年度「脳をつくるプ�
 - シミュレーションで学習したモデルを用いて、自作サーキット上の実機を自動走行させました。
 - 実機で、直線・Lカーブ・S字カーブでの自動走行を実現しました。
 
-[成果の詳細（到達したことと残ったこと・実装の要点）を見る](RESULTS)
+[成果の詳細（到達したことと残ったこと・実装の要点）を見る](RESULTS.html)
 
 ## ページ案内
 
 <div class="page-cards">
-  <a class="page-card" href="RESULTS"><strong>成果</strong><span>到達したことと残ったこと。実機と学習結果の図表、実装の要点、用語</span></a>
-  <a class="page-card" href="ABOUT"><strong>プロジェクトについて</strong><span>概要、体制と担当、組織を作った理由と結果、変遷</span></a>
-  <a class="page-card" href="ABOUT_appendix"><strong>経緯</strong><span>報酬設計の4版、拡張ボードまでの経路、TensorFlowからPyTorchへ</span></a>
-  <a class="page-card" href="SETUP"><strong>環境・実行記録</strong><span>当時の環境の版、構築手順、詰まる箇所と対処</span></a>
+  <a class="page-card" href="RESULTS.html"><strong>成果</strong><span>到達したことと残ったこと。実機と学習結果の図表、実装の要点、用語</span></a>
+  <a class="page-card" href="ABOUT.html"><strong>プロジェクトについて</strong><span>概要、体制と担当、組織を作った理由と結果、変遷</span></a>
+  <a class="page-card" href="ABOUT_appendix.html"><strong>経緯</strong><span>報酬設計の4版、拡張ボードまでの経路、TensorFlowからPyTorchへ</span></a>
+  <a class="page-card" href="SETUP.html"><strong>環境・実行記録</strong><span>当時の環境の版、構築手順、詰まる箇所と対処</span></a>
   <a class="page-card" href="https://github.com/jin-research/MakeBrainProject2022_WorldModelTeam"><strong>コード（GitHub）</strong><span>ノートブック、実機コード、実行方法（README）</span></a>
 </div>
 
