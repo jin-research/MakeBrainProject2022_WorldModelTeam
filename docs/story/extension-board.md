@@ -33,4 +33,4 @@ Nao と拡張ボードを使える状態になった後も、`manage.py` はア�
 
 ---
 
-[経緯の一覧へ戻る](../ABOUT_appendix)
+[経緯の一覧へ戻る](../ABOUT_appendix.html)
