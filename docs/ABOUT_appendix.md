@@ -11,9 +11,9 @@ description: "世界モデルカーの開発記録。カメラ画像から計算
 
 ## 記事
 
-- **2022年10月** — [報酬設計の4版 — CTEを捨てて、色で走る](story/reward-design)
+- **2022年10月** — [報酬設計の4版 — CTEを捨てて、色で走る](story/reward-design.html)
   CTEを使う標準の報酬を捨て、路面色の画素割合で計算する報酬に変えるまで。
-- **2022年10月〜11月** — [拡張ボードが動かない — PCA9685 から MyController まで](story/extension-board)
+- **2022年10月〜11月** — [拡張ボードが動かない — PCA9685 から MyController まで](story/extension-board.html)
   モーターを制御できない原因を追い、改造 JetPack と `MyController` で実機を動かすまで。
 
 ## その他の記録
